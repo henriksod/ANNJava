@@ -13,5 +13,6 @@ public class Main {
         SimpleMatrix b = new SimpleMatrix(mat2);
         SimpleMatrix c = MatrixUtils.hadamard(a,b);
         System.out.println(c.toString());
+        System.out.println(":)");
     }
 }
