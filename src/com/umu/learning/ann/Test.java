@@ -5,4 +5,7 @@ package com.umu.learning.ann;
  */
 public class Test {
     String wtf = "fuckoff";
+    int blabla () {
+        return 1;
+    }
 }
