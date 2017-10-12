@@ -2,6 +2,9 @@ package com.umu.learning.ann.ANN.MatrixUtils;
 
 import org.ejml.simple.SimpleMatrix;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Henrik on 10/10/2017.
  */
@@ -23,5 +26,17 @@ public class MatrixUtils {
         throw new IllegalArgumentException(
                 "Hadamard product is undefined for matrices with different dimensions\n" +
                 "A = ("+a.numRows()+","+a.numCols()+") /= "+"("+b.numRows()+","+b.numCols()+") = B");
+    }
+
+    public static List<Double> matrixToList (SimpleMatrix m) {
+        List<Double> list = new ArrayList<Double>();
+        for (int i = 0; i < m.numRows(); i++)
+            for (int j = 0; j < m.numCols(); j++)
+                list.add(m.get(i,j));
+        return list;
+    }
+
+    public static ColumnVector listToVector (List<Double> l) {
+        return new ColumnVector(l);
     }
 }

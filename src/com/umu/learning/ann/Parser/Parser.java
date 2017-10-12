@@ -1,6 +1,6 @@
 package com.umu.learning.ann.Parser;
 
-import com.umu.learning.ann.ANN.MatrixUtils.ColumnMatrix;
+import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
 import sun.misc.Queue;
 
 import java.io.*;
@@ -49,10 +49,10 @@ public class Parser {
                         numbers[i] = Integer.parseInt(values[i])/32.0;
 
                     if (currentFace.data == null)
-                        currentFace.data = new ColumnMatrix(numbers);
+                        currentFace.data = new ColumnVector(numbers);
                     else
                         currentFace.data =
-                                ColumnMatrix.fromMatrix(currentFace.data.concatRows(new ColumnMatrix(numbers)));
+                                ColumnVector.fromMatrix(currentFace.data.concatRows(new ColumnVector(numbers)));
                 }
             }
         }

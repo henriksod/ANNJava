@@ -1,6 +1,6 @@
 package com.umu.learning.ann.Parser;
 
-import com.umu.learning.ann.ANN.MatrixUtils.ColumnMatrix;
+import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -8,5 +8,5 @@ import org.ejml.simple.SimpleMatrix;
  */
 public class FaceImage {
     public int id;
-    public ColumnMatrix data;
+    public ColumnVector data;
 }
