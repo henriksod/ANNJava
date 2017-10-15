@@ -28,6 +28,11 @@ public class MatrixUtils {
                 "A = ("+a.numRows()+","+a.numCols()+") /= "+"("+b.numRows()+","+b.numCols()+") = B");
     }
 
+    /**
+     * Converts a matrix into a list of double. Elements gets inserted row-wise.
+     * @param m matrix m
+     * @return resulting list
+     */
     public static List<Double> matrixToList (SimpleMatrix m) {
         List<Double> list = new ArrayList<Double>();
         for (int i = 0; i < m.numRows(); i++)
@@ -36,6 +41,11 @@ public class MatrixUtils {
         return list;
     }
 
+    /**
+     * Converts a list of double into a column vector.
+     * @param l list
+     * @return resulting column vector
+     */
     public static ColumnVector listToVector (List<Double> l) {
         return new ColumnVector(l);
     }

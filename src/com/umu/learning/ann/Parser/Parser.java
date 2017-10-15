@@ -16,10 +16,26 @@ import java.util.regex.Pattern;
  * Created by Henrik on 10/11/2017.
  */
 public class Parser {
+    // Read image id
     private String imageNameRegex = "(Image(\\d+))";
+    // Read image facit
     private String imageFacitRegex = "(Image(\\d+)\\s(\\d+))";
+    // Read image data
     private String imageContentRegex = "(\\d+)(\\s*\\d+)*";
 
+    /**
+     * Parses a file using regular expressions to get image data of a 20x20 image contained in a text file.
+     * Each image should have the following form:
+     *      ImageX
+     *      d1x1 d2x1 d3x1 ... d20x1
+     *      d1x2 d2x2 d3x2 ... d20x2
+     *      .
+     *      .
+     *      .
+     *      d1x20 d2x20 d3x20 ... d20x20
+     * @param lines lines of the contents of the file
+     * @return list of FaceImage
+     */
     public List<FaceImage> parseData (List<String> lines) throws InterruptedException {
         ArrayList<FaceImage> faceList = new ArrayList<FaceImage>();
         Queue<String> queue = new Queue<String>();
@@ -60,6 +76,13 @@ public class Parser {
         return faceList;
     }
 
+    /**
+     * Parses a file using regular expressions to get image facit value of a specific image,
+     * contained in a text file. Each image facit should have the following form where Y = [1,2,3,4]:
+     *      ImageX Y
+     * @param lines lines of the contents of the file
+     * @return list of FaceFacit
+     */
     public List<FaceFacit> parseFacit (List<String> lines) throws InterruptedException {
         ArrayList<FaceFacit> faceList = new ArrayList<FaceFacit>();
         Queue<String> queue = new Queue<String>();
@@ -87,6 +110,11 @@ public class Parser {
         return faceList;
     }
 
+    /**
+     * Loads a file and returns a list of lines.
+     * @param path file path
+     * @return list of lines
+     */
     public List<String> loadFile (String path) throws IOException {
         return Files.readAllLines(Paths.get(path), Charset.defaultCharset());
     }

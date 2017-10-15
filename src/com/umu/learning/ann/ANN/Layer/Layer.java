@@ -12,10 +12,17 @@ import java.util.stream.Collectors;
  * Created by Henrik on 10/11/2017.
  */
 public class Layer {
-    SimpleMatrix lW; // Weight matrix
-    ColumnVector lB; // Bias vector
+    SimpleMatrix lW;        // Weight matrix
+    ColumnVector lB;        // Bias vector
     ActivationFunction lAS; // Activation Function
 
+    /**
+     * Propagates through one layer K, given the previous propagated layer J.
+     * Calculates the output of layer K for both the activation function and it's derivative.
+     * @param layerJ Layer to be propagated
+     * @param layerK Previous, propagated layer
+     * @return Propagated current layer
+     */
     PropagatedLayer propagate(PropagatedLayer layerJ, Layer layerK) {
         PropagatedLayer newPRL = new PropagatedLayer();
 

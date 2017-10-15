@@ -9,10 +9,19 @@ import org.ejml.simple.SimpleMatrix;
  * Created by Henrik on 10/11/2017.
  */
 public class PropagatedLayer extends Layer {
-    ColumnVector pIn; // Layer input vector
-    ColumnVector pOut; // Layer output vector
+    ColumnVector pIn;    // Layer input vector
+    ColumnVector pOut;   // Layer output vector
     ColumnVector pDeriv; // Layer activation function derivative
 
+    /**
+     * Backpropagates one layer J, given the previous backpropagated layer K.
+     * Calculates the error gradient from the output to the current layer through
+     * the error gradients of the previous backpropagated layers. Also calculates
+     * the bias error gradient for the bias points.
+     * @param layerJ Layer to be backpropagated
+     * @param layerK Previous, backpropagated layer
+     * @return Backpropagated current layer
+     */
     BackpropagatedLayer backpropagate(PropagatedLayer layerJ, BackpropagatedLayer layerK) {
         BackpropagatedLayer newBPRL = new BackpropagatedLayer();
 
@@ -35,10 +44,23 @@ public class PropagatedLayer extends Layer {
         return newBPRL;
     }
 
+    /**
+     * Calculates the error gradient for weight matrices.
+     * @param dazzle Error gradient for the prior layers
+     * @param deriv Derivative of layer output
+     * @param input Input to layer
+     * @return Error gradient for weight matrix of current layer
+     */
     private ColumnVector errorGrad (ColumnVector dazzle, ColumnVector deriv, ColumnVector input) {
         return (ColumnVector)MatrixUtils.hadamard(dazzle,deriv).mult(input);
     }
 
+    /**
+     * Calculates the error gradient for bias vectors.
+     * @param dazzle Error gradient for the prior layers
+     * @param deriv Derivative of layer output
+     * @return Error gradient for bias vector of current layer
+     */
     private ColumnVector errorGrad (ColumnVector dazzle, ColumnVector deriv) {
         return (ColumnVector)MatrixUtils.hadamard(dazzle,deriv);
     }
