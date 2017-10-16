@@ -10,4 +10,5 @@ import java.util.List;
 public class Network {
     List<Layer> layers;
     double learningRate;
+    //smtg
 }
