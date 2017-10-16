@@ -46,6 +46,11 @@ public class Network {
         }
     }
 
+    public Network (double learningRate, List<SimpleMatrix> weights, ActivationFunction aF, ActivationFunction aFO) {
+        this(learningRate,weights,aF);
+        layers.get(layers.size()-1).lAS = aFO;
+    }
+
     public List<PropagatedLayer> propagateNet (ColumnVector input)
     {
         PropagatedLayer layer0 = new PropagatedSensorLayer();
