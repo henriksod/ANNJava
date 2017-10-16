@@ -45,6 +45,25 @@ public class PropagatedLayer extends Layer {
         return newBPRL;
     }
 
+    BackpropagatedLayer backpropagatedFinalLayer(PropagatedLayer layer, ColumnVector target)
+    {
+        BackpropagatedLayer fA = layer.pDeriv;
+        ColumnVector dazzle = layer.pOut.minus(target);
+
+        //back propagated layer
+        newBPRL.bpDazzle = dazzle;
+        newBPRL.bpErrGrad = errorGrad(dazzle, fA, layer.pIn);
+        newBPRL.bpBiasErrGrad = errorGrad(dazzle, fA);
+        newBPRL.bpDeriv = layer.pDeriv;
+        newBPRL.bpIn = layer.pIn;
+        newBPRL.bpOut = layer.pOut;
+        newBPRL.lW = layer.lW;
+        newBPRL.lB = layer.lB;
+        newBPRL.lAS = layer.lAS;
+
+        return newBPRL;
+    }
+
     /**
      * Calculates the error gradient for weight matrices.
      * @param dazzle Error gradient for the prior layers
