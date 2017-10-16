@@ -9,9 +9,9 @@ import org.ejml.simple.SimpleMatrix;
  * Created by Henrik on 10/11/2017.
  */
 public class PropagatedLayer extends Layer {
-    ColumnVector pIn;    // Layer input vector
-    ColumnVector pOut;   // Layer output vector
-    ColumnVector pDeriv; // Layer activation function derivative
+    public ColumnVector pIn;    // Layer input vector
+    public ColumnVector pOut;   // Layer output vector
+    public ColumnVector pDeriv; // Layer activation function derivative
 
     /**
      * Backpropagates one layer J, given the previous backpropagated layer K.
@@ -22,7 +22,7 @@ public class PropagatedLayer extends Layer {
      * @param layerK Previous, backpropagated layer
      * @return Backpropagated current layer
      */
-    BackpropagatedLayer backpropagate(PropagatedLayer layerJ, BackpropagatedLayer layerK) {
+    public BackpropagatedLayer backpropagate(PropagatedLayer layerJ, BackpropagatedLayer layerK) {
         BackpropagatedLayer newBPRL = new BackpropagatedLayer();
 
         SimpleMatrix wKT = layerK.lW.transpose();
@@ -45,10 +45,11 @@ public class PropagatedLayer extends Layer {
         return newBPRL;
     }
 
-    BackpropagatedLayer backpropagatedFinalLayer(PropagatedLayer layer, ColumnVector target)
+    public BackpropagatedLayer backpropagateFinalLayer(PropagatedLayer layer, ColumnVector target)
     {
-        BackpropagatedLayer fA = layer.pDeriv;
-        ColumnVector dazzle = layer.pOut.minus(target);
+        BackpropagatedLayer newBPRL = new BackpropagatedLayer();
+        ColumnVector fA = layer.pDeriv;
+        ColumnVector dazzle = ColumnVector.fromMatrix(layer.pOut.minus(target));
 
         //back propagated layer
         newBPRL.bpDazzle = dazzle;

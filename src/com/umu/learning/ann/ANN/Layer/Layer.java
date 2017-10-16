@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
  * Created by Henrik on 10/11/2017.
  */
 public class Layer {
-    SimpleMatrix lW;        // Weight matrix
-    ColumnVector lB;        // Bias vector
-    ActivationFunction lAS; // Activation Function
+    public SimpleMatrix lW;        // Weight matrix
+    public ColumnVector lB;        // Bias vector
+    public ActivationFunction lAS; // Activation Function
 
     /**
      * Propagates through one layer K, given the previous propagated layer J.
@@ -23,7 +23,7 @@ public class Layer {
      * @param layerK Previous, propagated layer
      * @return Propagated current layer
      */
-    PropagatedLayer propagate(PropagatedLayer layerJ, Layer layerK) {
+    public PropagatedLayer propagate(PropagatedLayer layerJ, Layer layerK) {
         PropagatedLayer newPRL = new PropagatedLayer();
 
         SimpleMatrix w = layerK.lW;
