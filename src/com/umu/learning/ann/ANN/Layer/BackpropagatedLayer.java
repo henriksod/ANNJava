@@ -1,6 +1,7 @@
 package com.umu.learning.ann.ANN.Layer;
 
 import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
+import org.ejml.simple.SimpleMatrix;
 
 /**
  * Created by Henrik on 10/11/2017.
@@ -12,4 +13,21 @@ public class BackpropagatedLayer extends Layer {
     public ColumnVector bpErrGrad;     // Layer weight error
     public ColumnVector bpBiasErrGrad; // Layer bias error
     public ColumnVector bpDeriv;       // Layer activation function derivative
+
+    public Layer update (double lRate, BackpropagatedLayer bpLayer) {
+        SimpleMatrix wOld = bpLayer.lW;
+        ColumnVector bOld = bpLayer.lB;
+        ColumnVector delW = (ColumnVector)bpLayer.bpErrGrad.scale(lRate);
+        ColumnVector delB = (ColumnVector)bpLayer.bpBiasErrGrad.scale(lRate);
+        SimpleMatrix wNew = wOld.minus(delW);
+        ColumnVector bNew = (ColumnVector)bOld.minus(delB);
+
+        Layer newLayer = new Layer();
+        newLayer.lW = wNew;
+        newLayer.lB = bNew;
+        newLayer.lAS = bpLayer.lAS;
+
+        return newLayer;
+    }
+
 }

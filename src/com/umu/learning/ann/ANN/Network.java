@@ -7,6 +7,7 @@ import com.umu.learning.ann.ANN.Layer.PropagatedLayer;
 import com.umu.learning.ann.ANN.Layer.PropagatedSensorLayer;
 import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
 import com.umu.learning.ann.ANN.MatrixUtils.MatrixUtils;
+import org.ejml.data.Matrix;
 import org.ejml.simple.SimpleMatrix;
 import org.w3c.dom.ranges.RangeException;
 
@@ -23,7 +24,26 @@ public class Network {
     double learningRate;
 
     public Network (double learningRate, List<SimpleMatrix> weights, ActivationFunction aF) {
+        if (weights.size() >= 2) {
+            SimpleMatrix w0 = weights.get(0);
+            List<SimpleMatrix> checkedWeights = new ArrayList<SimpleMatrix>();
+            checkedWeights.add(w0);
 
+            for (int i = 1; i < weights.size(); i++) {
+                SimpleMatrix currentWeight = checkDimensions(w0,weights.get(i));
+                w0 = currentWeight;
+                checkedWeights.add(currentWeight);
+            }
+
+            for (SimpleMatrix w : checkedWeights) {
+                Layer newLayer = buildLayer(w, aF);
+                layers.add(newLayer);
+            }
+
+            this.learningRate = learningRate;
+        } else {
+            throw new IndexOutOfBoundsException("You need at least two weight matrices in the network!");
+        }
     }
 
     public List<PropagatedLayer> propagateNet (ColumnVector input)
@@ -60,6 +80,22 @@ public class Network {
         return list;
     }
 
+    public void updateNet (List<BackpropagatedLayer> bpLayers) {
+        layers.clear();
+        for (BackpropagatedLayer bpL : bpLayers) {
+            layers.add(bpL.update(learningRate, bpL));
+        }
+    }
+
+    private SimpleMatrix checkDimensions(SimpleMatrix a, SimpleMatrix b) {
+        if (a.numRows() == b.numCols()) {
+            return b;
+        } else {
+            throw new IndexOutOfBoundsException
+                    ("Inconsistent dimensions in weight matrix");
+        }
+    }
+
     private ColumnVector validateInput(ColumnVector input) {
         SimpleMatrix firstLayerW = this.layers.get(0).lW;
         if (firstLayerW.numCols() == input.numRows()) {
@@ -78,6 +114,20 @@ public class Network {
 
     private boolean withinRange(double value) {
         return value >= 0 && value <= 1;
+    }
+
+    private Layer buildLayer(SimpleMatrix w, ActivationFunction aF) {
+        Layer newLayer = new Layer();
+        newLayer.lW = w;
+        newLayer.lAS = aF;
+
+        double[] tmp = new double[w.numRows()];
+        for (int i = 0; i < tmp.length; i++)
+            tmp[i] = 1;
+
+        newLayer.lB = new ColumnVector(tmp);
+
+        return newLayer;
     }
 
 }
