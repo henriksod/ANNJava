@@ -38,10 +38,10 @@ public class Layer {
 
         // Apply activation function to output
         List<Double> input = MatrixUtils.matrixToList(a);
-        List<Double> foutput = input.stream().map(newPRL.lAS::function).collect(Collectors.toList());
+        List<Double> foutput = input.stream().map(newPRL.lAS::function).collect(Collectors.toList()); //lAS - Activation layer
         List<Double> dfoutput = input.stream().map(newPRL.lAS::derivative).collect(Collectors.toList());
 
-        newPRL.pOut = MatrixUtils.listToVector(foutput);
+        newPRL.pOut = MatrixUtils.listToVector(foutput); //propagated layer
         newPRL.pDeriv = MatrixUtils.listToVector(dfoutput);
 
         return newPRL;

@@ -31,6 +31,7 @@ public class PropagatedLayer extends Layer {
         ColumnVector dazzleK = layerK.bpDazzle;
         ColumnVector dazzleJ = (ColumnVector)wKT.mult(MatrixUtils.hadamard(dazzleK, fAK));
 
+        //back propagated layer
         newBPRL.bpDazzle = dazzleJ;
         newBPRL.bpErrGrad = errorGrad(dazzleJ, fAJ, layerJ.pIn);
         newBPRL.bpBiasErrGrad = errorGrad(dazzleJ, fAJ);
