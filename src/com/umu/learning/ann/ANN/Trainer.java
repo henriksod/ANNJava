@@ -20,7 +20,8 @@ public class Trainer {
                                 double trainingPortion,
                                 double trainingDeltaLimit,
                                 double validationDeltaLimit,
-                                double errorMinimum)
+                                double errorMinimum,
+                                double epochLimit)
     {
         List<ColumnVector> trainingSetIn = ins.subList(0,(int)((ins.size()-1)*trainingPortion));
         List<ColumnVector> trainingSetOut = outs.subList(0,(int)((ins.size()-1)*trainingPortion));
@@ -50,8 +51,8 @@ public class Trainer {
                                "\t\t"+formatter.format(trainingDelta));
 
             epoch++;
-        } while (Math.abs(trainingDelta) > trainingDeltaLimit && Math.abs(validationDelta) > validationDeltaLimit
-                    || curValidation >= errorMinimum);
+        } while ((Math.abs(trainingDelta) > trainingDeltaLimit && Math.abs(validationDelta) > validationDeltaLimit
+                    || curValidation >= errorMinimum) && epoch < epochLimit);
 
         return result;
     }

@@ -29,6 +29,7 @@ public class Main {
     public static final double MIN_TRAINING_DELTA = 0.005; // Value to determine when it converges
     public static final double MIN_VALIDATION_DELTA = 0.0005; // Value to determine when it converges
     public static final double MIN_ERROR_LIMIT = 0.25; // Minimum of 80% correct
+    public static final double EPOCH_LIMIT = 100; // Number of epochs until it gives up
 
     private static SimpleMatrix generateWeightMatrix (int outputs, int inputs) {
         double[][] data = new double[outputs][inputs];
@@ -82,7 +83,7 @@ public class Main {
 
             Trainer trainer = new Trainer();
             network = trainer.trainNetwork(network, inputs, outputs,
-                    TRAINING_PORTION, MIN_TRAINING_DELTA, MIN_VALIDATION_DELTA, MIN_ERROR_LIMIT);
+                    TRAINING_PORTION, MIN_TRAINING_DELTA, MIN_VALIDATION_DELTA, MIN_ERROR_LIMIT, EPOCH_LIMIT);
 
             Tester tester = new Tester();
             List<Integer> result = tester.testNetwork(network, testInputs);
