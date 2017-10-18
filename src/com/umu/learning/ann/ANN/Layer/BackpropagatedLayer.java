@@ -10,17 +10,17 @@ public class BackpropagatedLayer extends Layer {
     public ColumnVector bpIn;          // Layer input vector
     public ColumnVector bpOut;         // Layer output vector
     public ColumnVector bpDazzle;      // Layer error signals
-    public ColumnVector bpErrGrad;     // Layer weight error
+    public SimpleMatrix bpErrGrad;     // Layer weight error
     public ColumnVector bpBiasErrGrad; // Layer bias error
     public ColumnVector bpDeriv;       // Layer activation function derivative
 
     public Layer update (double lRate, BackpropagatedLayer bpLayer) {
         SimpleMatrix wOld = bpLayer.lW;
         ColumnVector bOld = bpLayer.lB;
-        ColumnVector delW = (ColumnVector)bpLayer.bpErrGrad.scale(lRate);
-        ColumnVector delB = (ColumnVector)bpLayer.bpBiasErrGrad.scale(lRate);
+        SimpleMatrix delW = bpLayer.bpErrGrad.scale(lRate);
+        ColumnVector delB = ColumnVector.fromMatrix(bpLayer.bpBiasErrGrad.scale(lRate));
         SimpleMatrix wNew = wOld.minus(delW);
-        ColumnVector bNew = (ColumnVector)bOld.minus(delB);
+        ColumnVector bNew = ColumnVector.fromMatrix(bOld.minus(delB));
 
         Layer newLayer = new Layer();
         newLayer.lW = wNew;

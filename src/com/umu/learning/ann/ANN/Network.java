@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * Created by Henrik on 10/12/2017.
  */
 public class Network {
-    List<Layer> layers;
+    List<Layer> layers = new ArrayList<Layer>();
     double learningRate;
 
     public Network (double learningRate, List<SimpleMatrix> weights, ActivationFunction aF) {

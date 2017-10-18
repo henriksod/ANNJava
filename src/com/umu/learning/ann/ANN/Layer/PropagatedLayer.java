@@ -28,8 +28,8 @@ public class PropagatedLayer extends Layer {
         SimpleMatrix wKT = layerK.lW.transpose();
         ColumnVector fAK = layerK.bpDeriv;
         ColumnVector fAJ = layerJ.pDeriv;
-        ColumnVector dazzleK = layerK.bpDazzle;
-        ColumnVector dazzleJ = (ColumnVector)wKT.mult(MatrixUtils.hadamard(dazzleK, fAK));
+        ColumnVector dazzleK = ColumnVector.fromMatrix(layerK.bpDazzle);
+        ColumnVector dazzleJ = ColumnVector.fromMatrix(wKT.mult(MatrixUtils.hadamard(dazzleK, fAK)));
 
         //back propagated layer
         newBPRL.bpDazzle = dazzleJ;
@@ -72,8 +72,8 @@ public class PropagatedLayer extends Layer {
      * @param input Input to layer
      * @return Error gradient for weight matrix of current layer
      */
-    private ColumnVector errorGrad (ColumnVector dazzle, ColumnVector deriv, ColumnVector input) {
-        return (ColumnVector)MatrixUtils.hadamard(dazzle,deriv).mult(input);
+    private SimpleMatrix errorGrad (ColumnVector dazzle, ColumnVector deriv, ColumnVector input) {
+        return MatrixUtils.hadamard(dazzle,deriv).mult(input.transpose());
     }
 
     /**
@@ -83,7 +83,7 @@ public class PropagatedLayer extends Layer {
      * @return Error gradient for bias vector of current layer
      */
     private ColumnVector errorGrad (ColumnVector dazzle, ColumnVector deriv) {
-        return (ColumnVector)MatrixUtils.hadamard(dazzle,deriv);
+        return ColumnVector.fromMatrix(MatrixUtils.hadamard(dazzle,deriv));
     }
 
 }

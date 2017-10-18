@@ -22,10 +22,10 @@ public class Trainer {
                                 double validationDeltaLimit,
                                 double errorMinimum)
     {
-        List<ColumnVector> trainingSetIn = ins.subList(0,(int)((ins.size()-1)/trainingPortion));
-        List<ColumnVector> trainingSetOut = outs.subList(0,(int)((ins.size()-1)/trainingPortion));
-        List<ColumnVector> testSetIn = ins.subList((int)((ins.size()-1)/trainingPortion)+1,ins.size()-1);
-        List<ColumnVector> testSetOut = outs.subList((int)((ins.size()-1)/trainingPortion)+1,ins.size()-1);
+        List<ColumnVector> trainingSetIn = ins.subList(0,(int)((ins.size()-1)*trainingPortion));
+        List<ColumnVector> trainingSetOut = outs.subList(0,(int)((ins.size()-1)*trainingPortion));
+        List<ColumnVector> testSetIn = ins.subList((int)((ins.size()-1)*trainingPortion)+1,ins.size()-1);
+        List<ColumnVector> testSetOut = outs.subList((int)((ins.size()-1)*trainingPortion)+1,ins.size()-1);
 
         int epoch = 1;
         double trainingDelta = 0;
@@ -33,22 +33,24 @@ public class Trainer {
         double curValidation = 0;
         Network result = net;
         do {
+            double prevValidation = validateEach(result, testSetIn, testSetOut);
+            double prevTraining = validateEach(result, trainingSetIn, trainingSetOut);
+
             Network training = trainEach(result, trainingSetIn, trainingSetOut);
             curValidation = validateEach(training, testSetIn, testSetOut);
-            validationDelta = curValidation - validateEach(result, testSetIn, testSetOut);
-            trainingDelta = validateEach(training, trainingSetIn, trainingSetOut)
-                                        - validateEach(result, trainingSetIn, trainingSetOut);
+            validationDelta = curValidation - prevValidation;
+            trainingDelta = validateEach(training, trainingSetIn, trainingSetOut) - prevTraining;
             result = training;
 
-            NumberFormat formatter = new DecimalFormat("#0.00");
+            NumberFormat formatter = new DecimalFormat("#0.0000");
 
             System.out.println("Epoch "+epoch+"\terror\tvalidation\ttraining\t[Delta]");
-            System.out.println("\t"+formatter.format(curValidation)+
+            System.out.println("\t\t\t"+formatter.format(curValidation)+
                                "\t"+formatter.format(validationDelta)+
-                               "\t"+formatter.format(trainingDelta));
+                               "\t\t"+formatter.format(trainingDelta));
 
             epoch++;
-        } while (trainingDelta > trainingDeltaLimit && validationDelta > validationDeltaLimit
+        } while (Math.abs(trainingDelta) > trainingDeltaLimit && Math.abs(validationDelta) > validationDeltaLimit
                     || curValidation >= errorMinimum);
 
         return result;
