@@ -12,6 +12,12 @@ import java.util.List;
  */
 public class Tester {
 
+    /**
+     * Tests a network for performance, outputs the answer that the network guessed for each input vector.
+     * @param net the network
+     * @param ins list of input vectors
+     * @return list of answers ranging from 1 to 4 (1=Happy, 2=Sad, 3=Mischievous, 4=Mad).
+     */
     public List<Integer> testNetwork(Network net, List<ColumnVector> ins) {
         List<Integer> outs = new ArrayList<Integer>();
         for (int i = 0; i < ins.size(); i++) {
@@ -23,6 +29,11 @@ public class Tester {
         return outs;
     }
 
+    /**
+     * Finds largest value index in list of doubles.
+     * @param list list of doubles
+     * @return index with the largest value
+     */
     private int largest(List<Double> list) {
         int index = 0;
         for (int i = 0; i < list.size(); i++)

@@ -13,7 +13,7 @@ public class MatrixUtils {
      * Performs hadamard multiplication on two matrices, returns a new matrix.
      * @param a matrix a
      * @param b matrix b
-     * @return result matrix
+     * @return resulting hadamard product matrix
      */
     public static SimpleMatrix hadamard (SimpleMatrix a, SimpleMatrix b) {
         if (a.numCols() == b.numCols() || a.numRows() == b.numRows()) {

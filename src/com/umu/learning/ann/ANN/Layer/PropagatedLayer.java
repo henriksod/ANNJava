@@ -31,7 +31,7 @@ public class PropagatedLayer extends Layer {
         ColumnVector dazzleK = ColumnVector.fromMatrix(layerK.bpDazzle);
         ColumnVector dazzleJ = ColumnVector.fromMatrix(wKT.mult(MatrixUtils.hadamard(dazzleK, fAK)));
 
-        //back propagated layer
+        //new backpropagated layer
         newBPRL.bpDazzle = dazzleJ;
         newBPRL.bpErrGrad = errorGrad(dazzleJ, fAJ, layerJ.pIn);
         newBPRL.bpBiasErrGrad = errorGrad(dazzleJ, fAJ);
@@ -45,13 +45,22 @@ public class PropagatedLayer extends Layer {
         return newBPRL;
     }
 
+    /**
+     * Backpropagates the final layer.
+     * Calculates the error gradient from the output in comparison to the target output.
+     * Also calculates the bias error gradient for the bias points.
+     * This method has to be used on the output layer prior to backpropagating the other layers.
+     * @param layer Output layer to be backpropagated
+     * @param target Target output vector
+     * @return Backpropagated output layer
+     */
     public BackpropagatedLayer backpropagateFinalLayer(PropagatedLayer layer, ColumnVector target)
     {
         BackpropagatedLayer newBPRL = new BackpropagatedLayer();
         ColumnVector fA = layer.pDeriv;
         ColumnVector dazzle = ColumnVector.fromMatrix(layer.pOut.minus(target));
 
-        //back propagated layer
+        //new backpropagated layer
         newBPRL.bpDazzle = dazzle;
         newBPRL.bpErrGrad = errorGrad(dazzle, fA, layer.pIn);
         newBPRL.bpBiasErrGrad = errorGrad(dazzle, fA);

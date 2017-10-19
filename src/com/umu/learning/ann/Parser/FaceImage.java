@@ -7,6 +7,6 @@ import org.ejml.simple.SimpleMatrix;
  * Created by Henrik on 10/11/2017.
  */
 public class FaceImage {
-    public int id;
-    public ColumnVector data;
+    public int id; // Image id
+    public ColumnVector data; // Image data
 }

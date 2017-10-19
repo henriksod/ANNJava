@@ -14,6 +14,14 @@ public class BackpropagatedLayer extends Layer {
     public ColumnVector bpBiasErrGrad; // Layer bias error
     public ColumnVector bpDeriv;       // Layer activation function derivative
 
+    /**
+     * Updates a backpropagated layer, given the learning rate.
+     * This method updates the weight matrix of the given layer using the error gradient matrix computed
+     * through recursive backpropagation.
+     * @param lRate Learning rate
+     * @param bpLayer Backpropagated layer
+     * @return Updated layer
+     */
     public Layer update (double lRate, BackpropagatedLayer bpLayer) {
         SimpleMatrix wOld = bpLayer.lW;
         ColumnVector bOld = bpLayer.lB;

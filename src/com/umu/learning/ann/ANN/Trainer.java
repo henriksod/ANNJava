@@ -14,15 +14,29 @@ import java.util.List;
  */
 public class Trainer {
 
+    /**
+     * Trains the network given various parameters, inputs and outputs.
+     * Outputs the current epoch and the resulting error and deltas to console.
+     * @param net Network to be trained
+     * @param ins List of input vectors
+     * @param outs List of output vectors
+     * @param trainingPortion Training portion, the rest will be used for validation (error is based on validation set)
+     * @param trainingDeltaLimit Value to decide when training converges
+     * @param validationDeltaLimit Value to decide when validation converges
+     * @param errorMaximum The highest allowed error on validation set
+     * @param epochLimit Max number of epochs until it gives up training
+     * @return Trained network
+     */
     public Network trainNetwork(Network net,
                                 List<ColumnVector> ins,
                                 List<ColumnVector> outs,
                                 double trainingPortion,
                                 double trainingDeltaLimit,
                                 double validationDeltaLimit,
-                                double errorMinimum,
+                                double errorMaximum,
                                 double epochLimit)
     {
+        // Divide the inputs and outputs into portions
         List<ColumnVector> trainingSetIn = ins.subList(0,(int)((ins.size()-1)*trainingPortion));
         List<ColumnVector> trainingSetOut = outs.subList(0,(int)((ins.size()-1)*trainingPortion));
         List<ColumnVector> testSetIn = ins.subList((int)((ins.size()-1)*trainingPortion)+1,ins.size()-1);
@@ -34,9 +48,11 @@ public class Trainer {
         double curValidation = 0;
         Network result = net;
         do {
+            // Compute previous results
             double prevValidation = validateEach(result, testSetIn, testSetOut);
             double prevTraining = validateEach(result, trainingSetIn, trainingSetOut);
 
+            // Compute trained results and deltas
             Network training = trainEach(result, trainingSetIn, trainingSetOut);
             curValidation = validateEach(training, testSetIn, testSetOut);
             validationDelta = curValidation - prevValidation;
@@ -45,18 +61,28 @@ public class Trainer {
 
             NumberFormat formatter = new DecimalFormat("#0.0000");
 
-            System.out.println("Epoch "+epoch+"\terror\tvalidation\ttraining\t[Delta]");
-            System.out.println("\t\t\t"+formatter.format(curValidation)+
+            // Print progress
+            System.out.println("# Epoch "+epoch+"\terror\tvalidation\ttraining\t[Delta]");
+            System.out.println("# \t\t"+formatter.format(curValidation)+
                                "\t"+formatter.format(validationDelta)+
                                "\t\t"+formatter.format(trainingDelta));
 
             epoch++;
+            // End if training delta or validation delta has reached convergence limit but only if maximum error
+            // has been reached or if epoch limit has been reached.
         } while ((Math.abs(trainingDelta) > trainingDeltaLimit && Math.abs(validationDelta) > validationDeltaLimit
-                    || curValidation >= errorMinimum) && epoch < epochLimit);
+                    || curValidation >= errorMaximum) && epoch < epochLimit);
 
         return result;
     }
 
+    /**
+     * Trains the network for each input output pair.
+     * @param net Network to be trained
+     * @param ins List of input vectors
+     * @param outs List of output vectors
+     * @return Trained network
+     */
     private Network trainEach(Network net, List<ColumnVector> ins, List<ColumnVector> outs) {
         if (ins.size() == outs.size()) {
             Network training = net;
@@ -71,6 +97,13 @@ public class Trainer {
         }
     }
 
+    /**
+     * Validates the network for each input output pair.
+     * @param net Network to be validated
+     * @param ins List of input vectors
+     * @param outs List of output vectors
+     * @return Error which is the mean of each input output error
+     */
     private double validateEach(Network net, List<ColumnVector> ins, List<ColumnVector> outs) {
         if (ins.size() == outs.size()) {
             double magMean = 0;
@@ -85,6 +118,13 @@ public class Trainer {
         }
     }
 
+    /**
+     * Calculates the magnitude between two lists of doubles.
+     * Accepts different sizes of the lists but will only evaluate the magnitude based on the smallest one.
+     * @param x List x
+     * @param y List y
+     * @return Magnitude value which is the sum of absolute differences between all values in the lists.
+     */
     private double magnitude (List<Double> x, List<Double> y) {
         double mag = 0;
         for (int i = 0, j = 0; i < x.size() && j < y.size(); i++, j++) {
