@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Henrik on 10/17/2017.
+ * Tester contains methods for testing a Network
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class Tester {
 

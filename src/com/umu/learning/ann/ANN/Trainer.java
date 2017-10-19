@@ -10,7 +10,10 @@ import java.text.NumberFormat;
 import java.util.List;
 
 /**
- * Created by Henrik on 10/17/2017.
+ * Trainer contains methods for training a Network.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class Trainer {
 
@@ -85,13 +88,12 @@ public class Trainer {
      */
     private Network trainEach(Network net, List<ColumnVector> ins, List<ColumnVector> outs) {
         if (ins.size() == outs.size()) {
-            Network training = net;
             for (int i = 0; i < ins.size(); i++) {
-                List<PropagatedLayer> prls = training.propagateNet(ins.get(i));
-                List<BackpropagatedLayer> bprls = training.backpropagateNet(outs.get(i), prls);
-                training.updateNet(bprls);
+                List<PropagatedLayer> prls = net.propagateNet(ins.get(i));
+                List<BackpropagatedLayer> bprls = net.backpropagateNet(outs.get(i), prls);
+                net.updateNet(bprls);
             }
-            return training;
+            return net;
         } else {
             throw new IndexOutOfBoundsException("Number of inputs not same as number of outputs!");
         }

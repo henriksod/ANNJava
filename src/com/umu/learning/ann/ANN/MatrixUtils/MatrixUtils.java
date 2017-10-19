@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Henrik on 10/10/2017.
+ * MatrixUtils contains utility methods for matrices and column vectors
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class MatrixUtils {
     /**

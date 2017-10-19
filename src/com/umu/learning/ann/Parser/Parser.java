@@ -13,15 +13,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * The Parser class loads and parses files containing faces and correct answers
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class Parser {
-    // Read image id
-    private String imageNameRegex = "(Image(\\d+))";
-    // Read image facit
-    private String imageFacitRegex = "(Image(\\d+)\\s(\\d+))";
-    // Read image data
-    private String imageContentRegex = "(\\d+)(\\s*\\d+)*";
 
     /**
      * Parses a file using regular expressions to get image data of a 20x20 image contained in a text file.
@@ -46,7 +43,9 @@ public class Parser {
         int currentImage = 0;
         while (!queue.isEmpty()) {
             String line = queue.dequeue();
+            String imageNameRegex = "(Image(\\d+))";
             Pattern p1 = Pattern.compile(imageNameRegex);
+            String imageContentRegex = "(\\d+)(\\s*\\d+)*";
             Pattern p2 = Pattern.compile(imageContentRegex);
             Matcher nameMatcher = p1.matcher(line);
             Matcher contentMatcher = p2.matcher(line);
@@ -92,6 +91,7 @@ public class Parser {
         FaceFacit currentFace = new FaceFacit();
         while (!queue.isEmpty()) {
             String line = queue.dequeue();
+            String imageFacitRegex = "(Image(\\d+)\\s(\\d+))";
             Pattern p = Pattern.compile(imageFacitRegex);
             Matcher nameMatcher = p.matcher(line);
 

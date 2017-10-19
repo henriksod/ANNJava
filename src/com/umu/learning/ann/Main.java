@@ -17,6 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Artificial Neural Network Program for evaluating face expressions in 20x20 maps
+ * This program uses
+ *  ejml-core-0.32
+ *  ejml-ddense-0.32
+ *  ejml-simple-0.32
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
+ */
 public class Main {
 
     /**

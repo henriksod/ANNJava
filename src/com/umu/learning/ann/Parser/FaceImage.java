@@ -4,7 +4,10 @@ import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
 import org.ejml.simple.SimpleMatrix;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * FaceImage class contains face data
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class FaceImage {
     public int id; // Image id

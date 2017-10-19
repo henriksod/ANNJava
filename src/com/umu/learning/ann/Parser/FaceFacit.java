@@ -3,7 +3,10 @@ package com.umu.learning.ann.Parser;
 import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * FaceFacit class contains correct face expression
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class FaceFacit {
     public int id; // Image id

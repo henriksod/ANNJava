@@ -6,7 +6,10 @@ import org.ejml.data.Matrix;
 import org.ejml.simple.SimpleMatrix;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * PropagatedLayer is a propagated layer. A propagated layer allows for backpropagating.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class PropagatedLayer extends Layer {
     public ColumnVector pIn;    // Layer input vector

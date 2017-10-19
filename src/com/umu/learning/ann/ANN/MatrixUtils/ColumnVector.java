@@ -5,7 +5,10 @@ import org.ejml.simple.SimpleMatrix;
 import java.util.List;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * ColumnVector is an extension to SimpleMatrix that is strictly a Nx1 matrix.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class ColumnVector extends SimpleMatrix {
 

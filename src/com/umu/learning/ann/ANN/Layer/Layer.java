@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * Layer is a simple ANN layer containing weight matrix, bias vector, activation
+ * function and allows for propagating.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class Layer {
     public SimpleMatrix lW;        // Weight matrix

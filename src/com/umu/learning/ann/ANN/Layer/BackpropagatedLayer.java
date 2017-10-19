@@ -4,7 +4,10 @@ import com.umu.learning.ann.ANN.MatrixUtils.ColumnVector;
 import org.ejml.simple.SimpleMatrix;
 
 /**
- * Created by Henrik on 10/11/2017.
+ * BackpropagatedLayer is a backpropagated layer that allows for updating the weights.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class BackpropagatedLayer extends Layer {
     public ColumnVector bpIn;          // Layer input vector

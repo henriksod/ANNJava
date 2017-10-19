@@ -1,7 +1,10 @@
 package com.umu.learning.ann.ANN.ActivationFunction;
 
 /**
- * Created by Henrik on 10/10/2017.
+ * ActivationFunction is an interface that all activation functions has to follow.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public interface ActivationFunction {
 

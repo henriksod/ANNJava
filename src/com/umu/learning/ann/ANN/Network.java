@@ -17,7 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by Henrik on 10/12/2017.
+ * Network is the main ANN class which contains all the layers and
+ * methods for propagating, backpropagating and updating.
+ *
+ * @author HenrikS 2017-10-10
+ * @author JoanaV 2017-10-10
  */
 public class Network {
     List<Layer> layers = new ArrayList<Layer>(); // A list of layers in the network (excluding input layer)
@@ -156,7 +160,7 @@ public class Network {
         if (firstLayerW.numCols() == input.numRows()) {
             List<Double> inputs = MatrixUtils.matrixToList(input);
             boolean withinRange = inputs.stream().map(this::withinRange).reduce(true, (a,b) -> a && b);
-            if (withinRange == true) {
+            if (withinRange) {
                 return input;
             } else {
                 throw new NumberFormatException("Values in input vector not within range [0,1].");
