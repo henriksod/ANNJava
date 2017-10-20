@@ -27,7 +27,7 @@ import java.util.Random;
  * @author HenrikS 2017-10-10
  * @author JoanaV 2017-10-10
  */
-public class Main {
+public class Faces {
 
     /**
      * Parameters used in the program. These parameters have been optimized.
